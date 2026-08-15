@@ -1,0 +1,13 @@
+.git
+.gradle
+.idea
+.vscode
+build
+out
+frontend/node_modules
+frontend/dist
+*.iml
+.env
+frontend/.env
+frontend/.env.local
+HELP.md

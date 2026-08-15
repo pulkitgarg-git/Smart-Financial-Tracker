@@ -1,0 +1,22 @@
+# Render Blueprint — connect this repo, then add a PostgreSQL database (or Neon)
+# and set DATABASE_URL on the web service.
+
+services:
+  - type: web
+    name: smart-financial-tracker
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRATION_MS
+        value: "3600000"
+      - key: SPRING_JPA_DDL_AUTO
+        value: update
+      - key: SPRING_JPA_SHOW_SQL
+        value: "false"
+      # After first deploy, set this to your live URL (and Vercel URL if you split the UI)
+      - key: CORS_ALLOWED_ORIGINS
+        value: http://localhost:5173
