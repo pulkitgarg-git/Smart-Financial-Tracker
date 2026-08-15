@@ -10,8 +10,6 @@ Track income and expenses, see monthly and category breakdowns, and browse finan
 [![React](https://img.shields.io/badge/React-18-blue)](https://react.dev/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791)](https://www.postgresql.org/)
 
-> **Live demo:** add your Render URL here after deploy (see [Deploy](#deploy-live-demo)).
-
 ---
 
 ## Features
@@ -174,59 +172,3 @@ Base URL: `http://localhost:8081`
 | `CORS_ALLOWED_ORIGINS` | Comma-separated frontend origins |
 | `PORT` | HTTP port (Render sets this) |
 | `VITE_API_BASE_URL` | Frontend API origin; empty when UI is served by Spring |
-
----
-
-## Deploy (live demo)
-
-The Docker image builds the React app and copies it into Spring static resources, so **one service** hosts both UI and API.
-
-### 1. PostgreSQL (free)
-
-Create a database on [Neon](https://neon.tech) or Render Postgres. Copy the connection string (`postgres://...` is fine).
-
-### 2. Render Web Service
-
-1. Push this repo to GitHub (see below).  
-2. On [Render](https://render.com): **New → Web Service → connect the repo**.  
-3. Runtime: **Docker**.  
-4. Set environment variables:
-
-   | Key | Value |
-   |-----|--------|
-   | `DATABASE_URL` | Neon/Render Postgres URI |
-   | `JWT_SECRET` | Long random string (32+ chars) |
-   | `CORS_ALLOWED_ORIGINS` | Your Render URL, e.g. `https://smart-financial-tracker.onrender.com` |
-
-5. Deploy. Health check: `/actuator/health`.  
-6. Open the Render URL, sign up, and add a transaction.
-
-Free Render instances spin down after idle time; the first request after that can take ~30–60 seconds.
-
-### Run the image locally
-
-```powershell
-docker build -t smart-financial-tracker .
-docker run -p 8081:8081 `
-  -e DATABASE_URL="postgres://postgres:postgres@host.docker.internal:5432/smart_financial_tracker" `
-  -e JWT_SECRET="change-me-to-a-long-random-string-at-least-32-chars" `
-  smart-financial-tracker
-```
-
-Then open http://localhost:8081
-
----
-
-## Resume bullets (optional)
-
-- Built a full-stack finance tracker with **Spring Boot**, **JWT auth**, and **PostgreSQL**, with a **React** dashboard for transactions and analytics.  
-- Designed REST APIs for auth, transactions, and summaries; scoped all data to the authenticated user.  
-- Containerized the app with **Docker** (multi-stage Node + Java build) and added **GitHub Actions** CI.
-
----
-
-## Related
-
-- [`PROJECT_OVERVIEW.md`](PROJECT_OVERVIEW.md) — backend notes and learning path  
-
-MIT licensed. Contributions and forks welcome.
