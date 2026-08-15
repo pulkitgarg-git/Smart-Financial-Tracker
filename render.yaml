@@ -9,6 +9,8 @@ services:
     dockerfilePath: ./Dockerfile
     healthCheckPath: /actuator/health
     envVars:
+      - key: JAVA_OPTS
+        value: "-XX:+UseContainerSupport -Xms64m -Xmx192m -XX:MaxMetaspaceSize=96m -Xss256k -XX:+UseSerialGC -XX:TieredStopAtLevel=1"
       - key: JWT_SECRET
         generateValue: true
       - key: JWT_EXPIRATION_MS
